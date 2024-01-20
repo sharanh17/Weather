@@ -1,13 +1,30 @@
-
 import './App.css';
 import React, { useState, useEffect } from 'react';
-
 import axios from 'axios';
 
 const SearchBar = ({ onSearch }) => {
   const [city, setCity] = useState("");
-  const handleSearch = () => {
+
+  const handleSearch = async () => {
     onSearch(city);
+
+    // Assuming your API request logic is here
+    try {
+      const response = await axios.get(
+        "https://api.weatherapi.com/v1/current.json",
+        {
+          params: {
+            key: "13659205522d4d8fa1a101346241501",
+            q: city,
+          },
+        }
+      );
+      console.log("Weather data:", response.data);
+      // Further processing of the API response if needed
+    } catch (err) {
+      console.error("Error fetching data", err);
+      alert("Failed to fetch weather data");
+    }
   };
 
   const changeHandler = (e) => {
@@ -35,7 +52,6 @@ const WeatherCard = ({ title, data }) => {
     </div>
   );
 };
-
 
 const WeatherDisplay = ({ city }) => {
   const [weatherData, setWeatherData] = useState(null);
@@ -101,6 +117,7 @@ export default function App() {
   const handleSearch = (searchedVal) => {
     setCity(searchedVal);
   };
+
   return (
     <div className="App">
       <SearchBar onSearch={handleSearch} />
@@ -108,9 +125,6 @@ export default function App() {
     </div>
   );
 }
-
-
-
 
 
 
