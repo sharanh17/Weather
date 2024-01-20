@@ -1,6 +1,5 @@
 import './App.css';
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 
 const SearchBar = ({ onSearch }) => {
   const [city, setCity] = useState("");
@@ -9,17 +8,11 @@ const SearchBar = ({ onSearch }) => {
     onSearch(city);
 
     try {
-      // Make an API request when searching
-      const response = await axios.get(
-        "https://api.weatherapi.com/v1/current.json",
-        {
-          params: {
-            key: "13659205522d4d8fa1a101346241501",
-            q: city,
-          },
-        }
+      const response = await fetch(
+        `https://api.weatherapi.com/v1/current.json?key=13659205522d4d8fa1a101346241501&q=${city}`
       );
-      console.log("Weather data:", response.data);
+      const data = await response.json();
+      console.log("Weather data:", data);
       // Further processing of the API response if needed
     } catch (err) {
       console.error("Error fetching data", err);
@@ -60,16 +53,11 @@ const WeatherDisplay = ({ city }) => {
   const getWeatherData = async () => {
     try {
       // Make an API request to get weather data
-      const response = await axios.get(
-        "https://api.weatherapi.com/v1/current.json",
-        {
-          params: {
-            key: "13659205522d4d8fa1a101346241501",
-            q: city,
-          },
-        }
+      const response = await fetch(
+        `https://api.weatherapi.com/v1/current.json?key=13659205522d4d8fa1a101346241501&q=${city}`
       );
-      setWeatherData(response.data);
+      const data = await response.json();
+      setWeatherData(data);
     } catch (err) {
       console.error("Error fetching data", err);
       alert("Failed to fetch weather data");
@@ -126,7 +114,6 @@ export default function App() {
     </div>
   );
 }
-
 
 
 
