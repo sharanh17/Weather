@@ -8,8 +8,8 @@ const SearchBar = ({ onSearch }) => {
   const handleSearch = async () => {
     onSearch(city);
 
-    // Assuming your API request logic is here
     try {
+      // Make an API request when searching
       const response = await axios.get(
         "https://api.weatherapi.com/v1/current.json",
         {
@@ -59,6 +59,7 @@ const WeatherDisplay = ({ city }) => {
 
   const getWeatherData = async () => {
     try {
+      // Make an API request to get weather data
       const response = await axios.get(
         "https://api.weatherapi.com/v1/current.json",
         {
@@ -125,6 +126,7 @@ export default function App() {
     </div>
   );
 }
+
 
 
 
