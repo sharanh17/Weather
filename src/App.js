@@ -11,12 +11,17 @@ const SearchBar = ({ onSearch }) => {
       const response = await fetch(
         `https://api.weatherapi.com/v1/current.json?key=13659205522d4d8fa1a101346241501&q=${city}`
       );
+
+      if (!response.ok) {
+        throw new Error(`Failed to fetch weather data: ${response.statusText}`);
+      }
+
       const data = await response.json();
       console.log("Weather data:", data);
       // Further processing of the API response if needed
     } catch (err) {
       console.error("Error fetching data", err);
-      alert("Failed to fetch weather data");
+      alert(err.message);
     }
   };
 
@@ -52,15 +57,19 @@ const WeatherDisplay = ({ city }) => {
 
   const getWeatherData = async () => {
     try {
-      // Make an API request to get weather data
       const response = await fetch(
         `https://api.weatherapi.com/v1/current.json?key=13659205522d4d8fa1a101346241501&q=${city}`
       );
+
+      if (!response.ok) {
+        throw new Error('Failed to fetch weather data');
+      }
+
       const data = await response.json();
       setWeatherData(data);
     } catch (err) {
       console.error("Error fetching data", err);
-      alert("Failed to fetch weather data");
+      alert(err.message);
     } finally {
       setLoading(false);
     }
