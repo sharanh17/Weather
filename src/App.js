@@ -13,7 +13,7 @@ const SearchBar = ({ onSearch }) => {
       );
 
       if (!response.ok) {
-        throw new Error(`Failed to fetch weather data: ${response.statusText}`);
+        throw new Error('Failed to fetch weather data');
       }
 
       const data = await response.json();
